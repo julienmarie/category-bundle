@@ -10,6 +10,7 @@ use Akeneo\Tool\Component\Batch\Item\ItemProcessorInterface;
 use Akeneo\Tool\Component\Connector\Processor\Normalization\Processor;
 use Flagbit\Bundle\CategoryBundle\Connector\ArrayConverter\StandardToFlat\CategoryProperty as StandardToFlatConverter;
 use Flagbit\Bundle\CategoryBundle\Repository\CategoryPropertyRepository;
+use Flagbit\Bundle\CategoryBundle\Transformer\NormalizationTransformerManager;
 
 use function array_merge;
 
@@ -27,6 +28,7 @@ class ProcessorDecorator implements ItemProcessorInterface
     protected CategoryPropertyRepository $categoryPropertyRepository;
     protected StandardToFlatConverter $standardToFlat;
     protected ItemProcessorInterface $baseProcessor;
+    protected NormalizationTransformerManager $transformerManager;
 
     public function __construct(
         CategoryPropertyRepository $categoryPropertyRepository,
@@ -53,7 +55,9 @@ class ProcessorDecorator implements ItemProcessorInterface
         if ($categoryProperties !== null) {
             $categoryData = array_merge(
                 $categoryData,
-                $this->standardToFlat->convert($categoryProperties->getProperties())
+                $this->transformerManager->transformOnNormalized(
+                    $this->standardToFlat->convert($categoryProperties->getProperties())
+                )
             );
         }
 

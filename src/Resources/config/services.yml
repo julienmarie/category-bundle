@@ -74,6 +74,14 @@ services:
       - '@flagbit.category.converter.standard_to_flat.category_property'
       - '@flagbit.category.processor.normalization.category.inner'
 
+  flagbit.category.processor.denormalization.category:
+    class: 'Flagbit\Bundle\CategoryBundle\Connector\Processor\Denormalization\ProcessorDecorator'
+    decorates: 'pim_connector.processor.denormalization.category'
+    decoration_inner_name: 'flagbit.category.processor.denormalization.category.inner'
+    arguments:
+      - '@flagbit.category.processor.denormalization.category.inner'
+      - '@flagbit.category.properties_bag'
+
   flagbit.category.array_converter.flat_to_standard.category:
     class: 'Flagbit\Bundle\CategoryBundle\Connector\ArrayConverter\FlatToStandard\CategoryDecorator'
     decorates: 'pim_connector.array_converter.flat_to_standard.category'
@@ -91,3 +99,25 @@ services:
     class: 'Flagbit\Bundle\CategoryBundle\Schema\SchemaValidator'
     arguments:
       - '../Resources/config/schema/config.json'
+
+  flagbit.category.data_transformer.normalization_transformer_manager:
+    class: 'Flagbit\Bundle\CategoryBundle\Transformer\NormalizationTransformerManager'
+    arguments:
+      - '@flagbit.category.repository.category_config'
+
+  flagbit.category.data_transformer.denormalization_transformer_manager:
+    class: 'Flagbit\Bundle\CategoryBundle\Transformer\DenormalizationTransformerManager'
+    arguments:
+      - '@flagbit.category.repository.category_config'
+
+  flagbit.category.data_transformer.denormalization.default:
+    class: 'Flagbit\Bundle\CategoryBundle\Transformer\Denormalization\DefaultTransformer'
+    tags:
+      - name: 'flagbit.category.data_transformer.denormalization'
+        type: ['default']
+
+  flagbit.category.data_transformer.normalization.default:
+    class: 'Flagbit\Bundle\CategoryBundle\Transformer\Normalization\DefaultTransformer'
+    tags:
+      - name: 'flagbit.category.data_transformer.normalization'
+        type: ['default']
