@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Flagbit\Bundle\CategoryBundle\DependencyInjection\CompilerPass;
 
-use Flagbit\Bundle\CategoryBundle\Transformer\DenormalizationTransformer;
-use Flagbit\Bundle\CategoryBundle\Transformer\NormalizationTransformerManager;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -17,11 +15,25 @@ class DataTransformerCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (! $container->has(NormalizationTransformerManager::class)) {
+        if ($container->has('flagbit.category.data_transformer.normalization_transformer_manager')) {
+            $this->collectNormalizationTransformers($container);
+        }
+
+        if (! $container->has('flagbit.category.data_transformer.denormalization_transformer_manager')) {
             return;
         }
 
-        $normalizationDefinition = $container->findDefinition(NormalizationTransformerManager::class);
+        $this->collectDenormalizationTransformers($container);
+    }
+
+    /**
+     * Collect all normalization transformers and register them.
+     */
+    private function collectNormalizationTransformers(ContainerBuilder $container): void
+    {
+        $normalizationDefinition = $container->findDefinition(
+            'flagbit.category.data_transformer.normalization_transformer_manager'
+        );
         $taggedServices          = $container->findTaggedServiceIds(
             'flagbit.category.data_transformer.normalization'
         );
@@ -33,8 +45,16 @@ class DataTransformerCompilerPass implements CompilerPassInterface
                 ]);
             }
         }
+    }
 
-        $denormalizationDefinition = $container->findDefinition(DenormalizationTransformer::class);
+    /**
+     * Collect all denormalization transformers and register them.
+     */
+    private function collectDenormalizationTransformers(ContainerBuilder $container): void
+    {
+        $denormalizationDefinition = $container->findDefinition(
+            'flagbit.category.data_transformer.denormalization_transformer_manager'
+        );
         $taggedServices            = $container->findTaggedServiceIds(
             'flagbit.category.data_transformer.denormalization'
         );

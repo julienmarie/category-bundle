@@ -73,6 +73,7 @@ services:
       - '@flagbit.category.repository.category_property'
       - '@flagbit.category.converter.standard_to_flat.category_property'
       - '@flagbit.category.processor.normalization.category.inner'
+      - '@flagbit.category.data_transformer.normalization_transformer_manager'
 
   flagbit.category.processor.denormalization.category:
     class: 'Flagbit\Bundle\CategoryBundle\Connector\Processor\Denormalization\ProcessorDecorator'
@@ -80,6 +81,7 @@ services:
     decoration_inner_name: 'flagbit.category.processor.denormalization.category.inner'
     arguments:
       - '@flagbit.category.processor.denormalization.category.inner'
+      - '@flagbit.category.data_transformer.denormalization_transformer_manager'
       - '@flagbit.category.properties_bag'
 
   flagbit.category.array_converter.flat_to_standard.category:
@@ -114,10 +116,10 @@ services:
     class: 'Flagbit\Bundle\CategoryBundle\Transformer\Denormalization\DefaultTransformer'
     tags:
       - name: 'flagbit.category.data_transformer.denormalization'
-        type: ['default']
+        type: 'default'
 
   flagbit.category.data_transformer.normalization.default:
     class: 'Flagbit\Bundle\CategoryBundle\Transformer\Normalization\DefaultTransformer'
     tags:
       - name: 'flagbit.category.data_transformer.normalization'
-        type: ['default']
+        type: 'default'

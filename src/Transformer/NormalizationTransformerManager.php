@@ -29,7 +29,7 @@ class NormalizationTransformerManager
     private CategoryConfigRepository $categoryConfigRepository;
 
     /** @var array<string, NormalizationTransformer> */
-    private array $dataTransformers;
+    private array $dataTransformers = [];
 
     public function __construct(CategoryConfigRepository $categoryConfigRepository)
     {
@@ -71,14 +71,12 @@ class NormalizationTransformerManager
     }
 
     /**
-     * Add a new import transformer to the registered transformers
+     * Add a new normalization transformer to the registered transformers
      *
-     * @param string[] $types on which the transformer should be applied
+     * @param string $type on which the transformer should be applied
      */
-    public function addTransformer(NormalizationTransformer $transformer, array $types): void
+    public function addTransformer(NormalizationTransformer $transformer, string $type): void
     {
-        foreach ($types as $type) {
-            $this->dataTransformers[$type] = $transformer;
-        }
+        $this->dataTransformers[$type] = $transformer;
     }
 }

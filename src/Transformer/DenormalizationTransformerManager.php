@@ -29,7 +29,7 @@ class DenormalizationTransformerManager
     private CategoryConfigRepository $categoryConfigRepository;
 
     /** @var array<string, DenormalizationTransformer> */
-    private array $dataTransformers;
+    private array $dataTransformers = [];
 
     public function __construct(CategoryConfigRepository $categoryConfigRepository)
     {
@@ -71,14 +71,12 @@ class DenormalizationTransformerManager
     }
 
     /**
-     * Add a new import transformer to the registered transformers
+     * Add a new denormalization transformer to the registered transformers
      *
-     * @param string[] $types on which the transformer should be applied
+     * @param string $type on which the transformer should be applied
      */
-    public function addTransformer(DenormalizationTransformer $transformer, array $types): void
+    public function addTransformer(DenormalizationTransformer $transformer, string $type): void
     {
-        foreach ($types as $type) {
-            $this->dataTransformers[$type] = $transformer;
-        }
+        $this->dataTransformers[$type] = $transformer;
     }
 }
