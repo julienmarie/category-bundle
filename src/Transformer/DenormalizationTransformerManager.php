@@ -23,8 +23,8 @@ use Flagbit\Bundle\CategoryBundle\Repository\CategoryConfigRepository;
  */
 class DenormalizationTransformerManager
 {
+    public const DEFAULT_NORMALIZATION_TRANSFORMER   = 'default';
     private const DEFAULT_PROPERTY_CONFIG_IDENTIFIER = 1;
-    private const DEFAULT_NORMALIZATION_TRANSFORMER  = 'default';
 
     private CategoryConfigRepository $categoryConfigRepository;
 
