@@ -62,8 +62,6 @@ class BulkSavePropertyListener
                 return;
             }
 
-
-
             if ($this->validator->validate($properties) !== []) {
                 throw ValidationFailed::invalidPropertyJsonFormat();
             }

@@ -11,8 +11,6 @@ use Akeneo\Tool\Component\Connector\Processor\Normalization\Processor;
 use Flagbit\Bundle\CategoryBundle\Transformer\DenormalizationTransformerManager;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
-use function array_merge;
-
 /**
  * Decorator to transform category properties during denormalization.
  *
