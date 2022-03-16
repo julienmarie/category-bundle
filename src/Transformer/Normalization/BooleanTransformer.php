@@ -12,12 +12,12 @@ use Flagbit\Bundle\CategoryBundle\Transformer\NormalizationTransformer;
 class BooleanTransformer implements NormalizationTransformer
 {
     /**
-     * Convert passed data to a int representing the boolean value of the data (0 / 1).
+     * Convert passed data to a string representing the boolean value of the data (0 / 1).
      *
-     * @param mixed $data
+     * @phpstan-param bool $data
      */
-    public function transform($data): int
+    public function transform($data): string
     {
-        return (int) ((bool) $data);
+        return $data ? '1' : '0';
     }
 }

@@ -12,7 +12,7 @@ use Flagbit\Bundle\CategoryBundle\Transformer\DenormalizationTransformer;
 class BooleanTransformer implements DenormalizationTransformer
 {
     /**
-     * Convert passed data to an int representing the boolean value of the data (0 / 1).
+     * Convert passed data to a boolean representing the boolean value of the data.
      *
      * @phpstan-param string $data
      */
