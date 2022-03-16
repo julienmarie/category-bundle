@@ -14,7 +14,7 @@ class BooleanTransformer implements DenormalizationTransformer
     /**
      * Convert passed data to an int representing the boolean value of the data (0 / 1).
      *
-     * @phpstan-param bool $data
+     * @phpstan-param string $data
      */
     public function transform($data): bool
     {
