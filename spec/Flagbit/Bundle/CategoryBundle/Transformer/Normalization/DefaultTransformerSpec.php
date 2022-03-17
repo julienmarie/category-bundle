@@ -20,8 +20,5 @@ class DefaultTransformerSpec extends ObjectBehavior
     public function it_returns_unmodified_value(): void
     {
         $this->transform('some test')->shouldReturn('some test');
-        $this->transform(5)->shouldReturn(5);
-        $this->transform(true)->shouldReturn(true);
-        $this->transform(['test' => 5])->shouldReturn(['test' => 5]);
     }
 }
