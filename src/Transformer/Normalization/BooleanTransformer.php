@@ -15,6 +15,8 @@ class BooleanTransformer implements NormalizationTransformer
      * Convert passed data to a string representing the boolean value of the data (0 / 1).
      *
      * @phpstan-param bool $data
+     *
+     * @phpstan-return numeric-string
      */
     public function transform($data): string
     {
