@@ -13,10 +13,8 @@ class BooleanTransformer implements DenormalizationTransformer
 {
     /**
      * Convert passed data to a boolean representing the boolean value of the data.
-     *
-     * @phpstan-param string $data
      */
-    public function transform($data): bool
+    public function transform(string $data): bool
     {
         return (bool) $data;
     }

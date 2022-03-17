@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Flagbit\Bundle\CategoryBundle\Transformer;
 
-use Flagbit\Bundle\CategoryBundle\Entity\CategoryConfig;
 use Flagbit\Bundle\CategoryBundle\Repository\CategoryConfigRepository;
 
 /**
@@ -23,7 +22,7 @@ use Flagbit\Bundle\CategoryBundle\Repository\CategoryConfigRepository;
  */
 class NormalizationTransformerManager
 {
-    public const DEFAULT_NORMALIZATION_TRANSFORMER   = 'default';
+    public const DEFAULT_NORMALIZATION_TRANSFORMER = 'default';
 
     private CategoryConfigRepository $categoryConfigRepository;
 

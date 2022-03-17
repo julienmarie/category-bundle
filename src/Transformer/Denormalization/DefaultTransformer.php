@@ -11,10 +11,7 @@ use Flagbit\Bundle\CategoryBundle\Transformer\DenormalizationTransformer;
  */
 class DefaultTransformer implements DenormalizationTransformer
 {
-    /**
-     * @phpstan-param mixed $data
-     */
-    public function transform(string $data)
+    public function transform(string $data): string
     {
         return $data;
     }
