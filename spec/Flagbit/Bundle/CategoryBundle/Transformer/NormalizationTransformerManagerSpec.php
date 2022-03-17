@@ -35,35 +35,10 @@ class NormalizationTransformerManagerSpec extends ObjectBehavior
         DefaultTransformer $defaultTransformer,
         BooleanTransformer $booleanTransformer
     ): void {
-        $categoryConfigRepository->find(1)
+        $categoryConfigRepository->findConfig()
             ->willReturn($categoryConfig);
 
         $categoryConfig->getConfig()->willReturn([]);
-        $defaultTransformer->transform(Argument::any())->shouldNotBeCalled();
-
-        // Add transformers
-        $this->addTransformer(
-            $defaultTransformer,
-            NormalizationTransformerManager::DEFAULT_NORMALIZATION_TRANSFORMER
-        );
-        $this->addTransformer(
-            $booleanTransformer,
-            'checkbox'
-        );
-
-        // Actual test call
-        $this->transformOnNormalized(['test' => ['null' => ['data' => 'test', 'locale' => 'null']]])
-            ->shouldReturn(['test' => ['null' => ['data' => 'test', 'locale' => 'null']]]);
-    }
-
-    public function it_skips_transformers_if_no_category_properties_exist(
-        CategoryConfigRepository $categoryConfigRepository,
-        DefaultTransformer $defaultTransformer,
-        BooleanTransformer $booleanTransformer
-    ): void {
-        $categoryConfigRepository->find(1)
-            ->willReturn(null);
-
         $defaultTransformer->transform(Argument::any())->shouldNotBeCalled();
 
         // Add transformers
@@ -87,7 +62,7 @@ class NormalizationTransformerManagerSpec extends ObjectBehavior
         DefaultTransformer $defaultTransformer,
         BooleanTransformer $booleanTransformer
     ): void {
-        $categoryConfigRepository->find(1)
+        $categoryConfigRepository->findConfig()
             ->willReturn($categoryConfig);
 
         $categoryConfig->getConfig()->willReturn([
@@ -120,7 +95,7 @@ class NormalizationTransformerManagerSpec extends ObjectBehavior
         DefaultTransformer $defaultTransformer,
         BooleanTransformer $booleanTransformer
     ): void {
-        $categoryConfigRepository->find(1)
+        $categoryConfigRepository->findConfig()
             ->willReturn($categoryConfig);
 
         $categoryConfig->getConfig()->willReturn([
@@ -128,9 +103,9 @@ class NormalizationTransformerManagerSpec extends ObjectBehavior
         ]);
 
         $defaultTransformer->transform(Argument::any())->shouldNotBeCalled();
-        $booleanTransformer->transform('')
+        $booleanTransformer->transform(false)
             ->shouldBeCalled()
-            ->willReturn(0);
+            ->willReturn('0');
 
         // Add transformers
         $this->addTransformer(
@@ -143,8 +118,8 @@ class NormalizationTransformerManagerSpec extends ObjectBehavior
         );
 
         // Actual test call
-        $this->transformOnNormalized(['test' => ['null' => ['data' => '', 'locale' => 'null']]])
-            ->shouldReturn(['test' => ['null' => ['data' => 0, 'locale' => 'null']]]);
+        $this->transformOnNormalized(['test' => ['null' => ['data' => false, 'locale' => 'null']]])
+            ->shouldReturn(['test' => ['null' => ['data' => '0', 'locale' => 'null']]]);
     }
 
     public function it_runs_transformations_with_mixed_transformers(
@@ -153,7 +128,7 @@ class NormalizationTransformerManagerSpec extends ObjectBehavior
         DefaultTransformer $defaultTransformer,
         BooleanTransformer $booleanTransformer
     ): void {
-        $categoryConfigRepository->find(1)
+        $categoryConfigRepository->findConfig()
             ->willReturn($categoryConfig);
 
         $categoryConfig->getConfig()->willReturn([
@@ -164,9 +139,9 @@ class NormalizationTransformerManagerSpec extends ObjectBehavior
         $defaultTransformer->transform('test')
             ->shouldBeCalled()
             ->willReturnArgument();
-        $booleanTransformer->transform('')
+        $booleanTransformer->transform(false)
             ->shouldBeCalled()
-            ->willReturn(0);
+            ->willReturn('0');
 
         // Add transformers
         $this->addTransformer(
@@ -181,10 +156,10 @@ class NormalizationTransformerManagerSpec extends ObjectBehavior
         // Actual test call
         $this->transformOnNormalized([
             'test' => ['null' => ['data' => 'test', 'locale' => 'null']],
-            'test2' => ['null' => ['data' => '', 'locale' => 'null']],
+            'test2' => ['null' => ['data' => false, 'locale' => 'null']],
         ])->shouldReturn([
             'test' => ['null' => ['data' => 'test', 'locale' => 'null']],
-            'test2' => ['null' => ['data' => 0, 'locale' => 'null']],
+            'test2' => ['null' => ['data' => '0', 'locale' => 'null']],
         ]);
     }
 
@@ -194,7 +169,7 @@ class NormalizationTransformerManagerSpec extends ObjectBehavior
         DefaultTransformer $defaultTransformer,
         BooleanTransformer $booleanTransformer
     ): void {
-        $categoryConfigRepository->find(1)
+        $categoryConfigRepository->findConfig()
             ->willReturn($categoryConfig);
 
         $categoryConfig->getConfig()->willReturn([
