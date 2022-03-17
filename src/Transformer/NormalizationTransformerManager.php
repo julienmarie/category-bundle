@@ -24,7 +24,6 @@ use Flagbit\Bundle\CategoryBundle\Repository\CategoryConfigRepository;
 class NormalizationTransformerManager
 {
     public const DEFAULT_NORMALIZATION_TRANSFORMER   = 'default';
-    private const DEFAULT_PROPERTY_CONFIG_IDENTIFIER = 1;
 
     private CategoryConfigRepository $categoryConfigRepository;
 
@@ -45,7 +44,7 @@ class NormalizationTransformerManager
      */
     public function transformOnNormalized(array $properties): array
     {
-        $propertyConfig = $this->findConfig();
+        $propertyConfig = $this->categoryConfigRepository->findConfig();
         foreach ($propertyConfig->getConfig() as $property => $config) {
             if (! isset($properties[$property])) {
                 continue;
@@ -60,14 +59,6 @@ class NormalizationTransformerManager
         }
 
         return $properties;
-    }
-
-    private function findConfig(): CategoryConfig
-    {
-        /** @phpstan-var CategoryConfig|null $categoryConfig */
-        $categoryConfig = $this->categoryConfigRepository->find(self::DEFAULT_PROPERTY_CONFIG_IDENTIFIER);
-
-        return $categoryConfig ?? new CategoryConfig([]);
     }
 
     /**

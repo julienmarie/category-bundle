@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Flagbit\Bundle\CategoryBundle\Transformer;
 
-use Flagbit\Bundle\CategoryBundle\Entity\CategoryConfig;
 use Flagbit\Bundle\CategoryBundle\Repository\CategoryConfigRepository;
 
 /**
@@ -23,8 +22,7 @@ use Flagbit\Bundle\CategoryBundle\Repository\CategoryConfigRepository;
  */
 class DenormalizationTransformerManager
 {
-    public const DEFAULT_NORMALIZATION_TRANSFORMER   = 'default';
-    private const DEFAULT_PROPERTY_CONFIG_IDENTIFIER = 1;
+    public const DEFAULT_NORMALIZATION_TRANSFORMER = 'default';
 
     private CategoryConfigRepository $categoryConfigRepository;
 
@@ -45,7 +43,7 @@ class DenormalizationTransformerManager
      */
     public function transformOnDenormalized(array $properties): array
     {
-        $propertyConfig = $this->findConfig();
+        $propertyConfig = $this->categoryConfigRepository->findConfig();
         foreach ($propertyConfig->getConfig() as $property => $config) {
             if (! isset($properties[$property])) {
                 continue;
@@ -60,14 +58,6 @@ class DenormalizationTransformerManager
         }
 
         return $properties;
-    }
-
-    private function findConfig(): CategoryConfig
-    {
-        /** @phpstan-var CategoryConfig|null $categoryConfig */
-        $categoryConfig = $this->categoryConfigRepository->find(self::DEFAULT_PROPERTY_CONFIG_IDENTIFIER);
-
-        return $categoryConfig ?? new CategoryConfig([]);
     }
 
     /**
