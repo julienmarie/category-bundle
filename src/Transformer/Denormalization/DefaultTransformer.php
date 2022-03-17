@@ -13,10 +13,8 @@ class DefaultTransformer implements DenormalizationTransformer
 {
     /**
      * @phpstan-param mixed $data
-     *
-     * @return mixed
      */
-    public function transform($data)
+    public function transform(string $data)
     {
         return $data;
     }
