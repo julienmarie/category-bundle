@@ -12,11 +12,9 @@ use Flagbit\Bundle\CategoryBundle\Transformer\NormalizationTransformer;
 class DefaultTransformer implements NormalizationTransformer
 {
     /**
-     * @phpstan-param mixed $data
-     *
-     * @return mixed
+     * @phpstan-param mixed $data data that can be cast to string
      */
-    public function transform($data)
+    public function transform($data): string
     {
         return $data;
     }

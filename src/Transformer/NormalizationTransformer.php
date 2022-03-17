@@ -13,8 +13,6 @@ interface NormalizationTransformer
      * Apply transformations to the supplied data on import.
      *
      * @param mixed $data a single property value
-     *
-     * @return mixed
      */
-    public function transform($data);
+    public function transform($data): string;
 }
